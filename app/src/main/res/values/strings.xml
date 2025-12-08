@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">IRIS</string>
+
+    <string name="status_navigation">Status: Navigation Mode</string>
+    <string name="error_camera">Error starting camera.</string>
+    <string name="status_listening">Status: Listening...</string>
+    <string name="start_camera_label">Start Vision</string>
+    <string name="start_camera_long_label">Open IRIS Vision</string>
+</resources>

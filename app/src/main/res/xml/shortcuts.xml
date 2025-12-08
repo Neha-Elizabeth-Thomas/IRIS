@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="open_camera"
+        android:enabled="true"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:shortcutShortLabel="@string/start_camera_label"
+        android:shortcutLongLabel="@string/start_camera_long_label">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.example.iris"
+            android:targetClass="com.example.iris.MainActivity" />
+    </shortcut>
+</shortcuts>
