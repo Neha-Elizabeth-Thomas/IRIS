@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.example.iris" // Make sure this matches your package name
-    compileSdk = 34
+    compileSdk = 36
 
     buildFeatures {
         buildConfig = true

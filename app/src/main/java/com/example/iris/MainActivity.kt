@@ -74,6 +74,12 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+        binding.settingsButton.setOnClickListener {
+            val intent = Intent(this, SettingsActivity::class.java)
+            startActivity(intent)
+        }
+
         cameraExecutor = Executors.newSingleThreadExecutor()
         tts = TextToSpeech(this, this)
         vibrator = getSystemService(Vibrator::class.java)
