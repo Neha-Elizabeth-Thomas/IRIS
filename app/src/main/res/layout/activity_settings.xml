@@ -48,6 +48,15 @@
                 android:textColor="#333333"
                 android:layout_marginBottom="8dp"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add one primary and a backup number"
+
+                android:textSize="18sp"
+                android:textColor="#333333"
+                android:layout_marginBottom="8dp"/>
+
             <EditText
                 android:id="@+id/caretakerPhone"
                 android:layout_width="match_parent"
@@ -58,17 +67,39 @@
                 android:background="@android:drawable/edit_text"
                 android:textColor="#000000"/>
 
-            <Button
-                android:id="@+id/addCaretakerButton"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:backgroundTint="#0C1657"
-                android:fontFamily="sans-serif-black"
-                android:rotation="0"
-                android:text="Add Caretaker"
-                android:textAllCaps="false"
-                android:textColor="@android:color/white" />
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <Button
+                    android:id="@+id/addCaretakerButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    android:backgroundTint="#0C1657"
+                    android:fontFamily="sans-serif-black"
+                    android:text="Add Caretaker"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white" />
+
+                <Button
+                    android:id="@+id/editCaretakerButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:backgroundTint="#0C1657"
+                    android:fontFamily="sans-serif-black"
+                    android:text="Edit Caretaker"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white" />
+
+            </LinearLayout>
+
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -133,37 +164,42 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <!-- About Button -->
+
+
+    <!-- Footer Buttons -->
 
     <Button
         android:id="@+id/aboutButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
         android:backgroundTint="#01070B"
         android:padding="14dp"
         android:text="About IRIS"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/teachFaceButton" />
 
     <Button
-        android:id="@+id/button2"
-        android:layout_width="370dp"
-        android:layout_height="66dp"
+        android:id="@+id/teachFaceButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         android:backgroundTint="#01070B"
-        android:text="Teach Familiar faces"
+        android:padding="14dp"
+        android:text="Teach Face"
+        android:textAllCaps="false"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@+id/aboutButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.585"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/preferencesCard"
-        app:layout_constraintVertical_bias="0.133" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/aboutButton"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
