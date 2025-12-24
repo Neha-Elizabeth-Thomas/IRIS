@@ -268,11 +268,27 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         startListening()
     }
 
+    private fun speakAllCommands() {
+        speak(
+            "You can say the following commands. " +
+                    "Say, read text, to read text in front of you. " +
+                    "Say, describe, to describe the environment. " +
+                    "Say, navigate to, followed by a place name, to get directions. " +
+                    "Say, help, for immediate emergency assistance."
+        )
+    }
+
+
     private fun processVoiceCommand(command: String) {
 
 
         if (command.contains("help")) {
             caretakerManager.callCaretaker()
+            return
+        }
+
+        if (command.contains("instructions")) {
+            speakAllCommands()
             return
         }
 
@@ -312,7 +328,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                 Log.e(TAG, "TTS Language not supported")
             } else {
-                speak("IRIS system ready.")
+                speak("IRIS system ready.Iam always watching the environment.Say instructions to know all commands")
             }
         }
     }
