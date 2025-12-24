@@ -13,6 +13,9 @@ class SettingsActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private lateinit var caretakerManager: CaretakerManager
     private lateinit var tts: TextToSpeech
 
+    // 🔁 Flag to know whether user is editing backup
+    private var isEditingBackup = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -26,40 +29,84 @@ class SettingsActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         // 3️⃣ Initialize CaretakerManager
         caretakerManager = CaretakerManager(this, tts)
 
-        // 4️⃣ Add Caretaker (PRIMARY)
+        // 4️⃣ ADD CARETAKER (Primary → Backup → Stop)
         binding.addCaretakerButton.setOnClickListener {
             val number = binding.caretakerPhone.text.toString().trim()
 
             if (number.isNotEmpty()) {
-                caretakerManager.savePrimary(number)
+                caretakerManager.addCaretakerNumber(number)
                 binding.caretakerPhone.text.clear()
             } else {
                 Toast.makeText(this, "Enter phone number", Toast.LENGTH_SHORT).show()
             }
         }
 
-        // 5️⃣ Edit Caretaker (BACKUP)
+        // 5️⃣ EDIT CARETAKER (BACKUP ONLY)
         binding.editCaretakerButton.setOnClickListener {
-            val number = binding.caretakerPhone.text.toString().trim()
 
-            if (number.isNotEmpty()) {
-                caretakerManager.saveBackup(number)
-                binding.caretakerPhone.text.clear()
+            if (!isEditingBackup) {
+                // First press → load saved backup number
+                val savedNumber = caretakerManager.getBackupNumber()
+
+                if (savedNumber != null) {
+                    binding.caretakerPhone.setText(savedNumber)
+                    binding.caretakerPhone.setSelection(savedNumber.length)
+                    tts.speak(
+                        "Edit the backup number and press edit again",
+                        TextToSpeech.QUEUE_FLUSH,
+                        null,
+                        null
+                    )
+                    isEditingBackup = true
+                } else {
+                    tts.speak(
+                        "No backup number saved yet",
+                        TextToSpeech.QUEUE_FLUSH,
+                        null,
+                        null
+                    )
+                }
+
             } else {
-                Toast.makeText(this, "Enter phone number", Toast.LENGTH_SHORT).show()
+                // Second press → save edited backup
+                val updatedNumber = binding.caretakerPhone.text.toString().trim()
+
+                if (updatedNumber.isNotEmpty()) {
+                    caretakerManager.updateBackup(updatedNumber)
+
+                    binding.caretakerPhone.text.clear()
+                    tts.speak(
+                        "Backup caretaker updated",
+                        TextToSpeech.QUEUE_FLUSH,
+                        null,
+                        null
+                    )
+                    isEditingBackup = false
+                } else {
+                    Toast.makeText(this, "Enter phone number", Toast.LENGTH_SHORT).show()
+                }
             }
         }
 
-        // 6️⃣ About button (keep your existing logic)
+        // 6️⃣ About button
         binding.aboutButton.setOnClickListener {
-            Toast.makeText(this, "IRIS – Assistive app for visually impaired", Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                this,
+                "IRIS – Assistive app for visually impaired",
+                Toast.LENGTH_LONG
+            ).show()
         }
     }
 
     override fun onInit(status: Int) {
         if (status == TextToSpeech.SUCCESS) {
             tts.language = Locale.US
-            tts.speak("Settings screen opened", TextToSpeech.QUEUE_FLUSH, null, null)
+            tts.speak(
+                "Settings screen opened",
+                TextToSpeech.QUEUE_FLUSH,
+                null,
+                null
+            )
         }
     }
 

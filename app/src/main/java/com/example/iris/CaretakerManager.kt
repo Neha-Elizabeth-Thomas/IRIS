@@ -8,7 +8,6 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.speech.tts.TextToSpeech
 import androidx.core.app.ActivityCompat
-import java.util.Locale
 
 class CaretakerManager(
     private val context: Context,
@@ -23,22 +22,50 @@ class CaretakerManager(
         private const val BACKUP = "caretaker_backup"
     }
 
-    /* ---------------- SAVE NUMBERS ---------------- */
+    /* ---------------- ADD NUMBER (SMART LOGIC) ---------------- */
 
-    fun savePrimary(number: String) {
-        prefs.edit().putString(PRIMARY, number).apply()
-        speak("Primary caretaker saved")
+    fun addCaretakerNumber(number: String) {
+
+        val primary = getPrimary()
+        val backup = getBackup()
+
+        when {
+            primary == null -> {
+                // 1️⃣ Save primary
+                prefs.edit().putString(PRIMARY, number).apply()
+                speak("Primary caretaker saved. Now save secondary number.")
+            }
+
+            backup == null -> {
+                // 2️⃣ Save backup
+                prefs.edit().putString(BACKUP, number).apply()
+                speak("Secondary caretaker saved successfully.")
+            }
+
+            else -> {
+                // 3️⃣ Both already saved
+                speak("You already added both caretaker numbers.")
+            }
+        }
     }
 
-    fun saveBackup(number: String) {
-        prefs.edit().putString(BACKUP, number).apply()
-        speak("Backup caretaker saved")
+    fun updateBackup(number: String) {
+        if (getBackup() != null) {
+            prefs.edit().putString(BACKUP, number).apply()
+            speak("Backup caretaker updated")
+        } else {
+            speak("No backup caretaker to update")
+        }
     }
+
 
     /* ---------------- GET NUMBERS ---------------- */
 
     private fun getPrimary(): String? = prefs.getString(PRIMARY, null)
     private fun getBackup(): String? = prefs.getString(BACKUP, null)
+
+    fun getPrimaryNumber(): String? = getPrimary()
+    fun getBackupNumber(): String? = getBackup()
 
     /* ---------------- EMERGENCY CALL ---------------- */
 
@@ -77,6 +104,8 @@ class CaretakerManager(
         }
         return false
     }
+
+    /* ---------------- SPEAK ---------------- */
 
     private fun speak(text: String) {
         tts?.speak(text, TextToSpeech.QUEUE_FLUSH, null, null)
