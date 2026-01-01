@@ -2,34 +2,21 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F7FA">
+    android:background="#F4F6FA">
 
-    <!-- Title -->
-    <TextView
-        android:id="@+id/titleText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="IRIS Settings"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        android:textColor="#222222"
-        android:layout_marginTop="24dp"
-        android:layout_marginStart="24dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-    <!-- Caretaker Card -->
+    <!-- HEADER -->
     <androidx.cardview.widget.CardView
-        android:id="@+id/caretakerCard"
+        android:id="@+id/headerCard"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="6dp"
-        app:layout_constraintTop_toBottomOf="@id/titleText"
+        android:backgroundTint="#0C1657"
+        android:minHeight="110dp"
+        app:cardCornerRadius="18dp"
+        app:cardElevation="8dp"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -37,25 +24,52 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="20dp">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Caretaker Settings"
+                android:text="IRIS"
+                android:textSize="28sp"
                 android:textStyle="bold"
-                android:textSize="18sp"
-                android:textColor="#333333"
-                android:layout_marginBottom="8dp"/>
+                android:textColor="@android:color/white"/>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Add one primary and a backup number"
+                android:text="Assistive Application for the Visually Impaired"
+                android:textSize="14sp"
+                android:textColor="#DDE1FF"
+                android:layout_marginTop="4dp"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
+    <!-- CARETAKER SETTINGS -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/caretakerCard"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="18dp"
+        app:cardElevation="8dp"
+        app:layout_constraintTop_toBottomOf="@id/headerCard"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="18dp">
+
+            <TextView
+                android:text="Caretaker Settings"
                 android:textSize="18sp"
-                android:textColor="#333333"
-                android:layout_marginBottom="8dp"/>
+                android:textStyle="bold"
+                android:textColor="#0C1657"/>
+
+            <TextView
+                android:text="Add one primary and a backup number"
+                android:textSize="14sp"
+                android:textColor="#666666"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="12dp"/>
 
             <EditText
                 android:id="@+id/caretakerPhone"
@@ -63,15 +77,15 @@
                 android:layout_height="wrap_content"
                 android:hint="Caretaker phone number"
                 android:inputType="phone"
-                android:padding="12dp"
+                android:padding="14dp"
                 android:background="@android:drawable/edit_text"
                 android:textColor="#000000"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
                 android:orientation="horizontal"
+                android:layout_marginTop="14dp"
                 android:weightSum="2">
 
                 <Button
@@ -80,11 +94,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginEnd="8dp"
-                    android:backgroundTint="#0C1657"
-                    android:fontFamily="sans-serif-black"
                     android:text="Add Caretaker"
                     android:textAllCaps="false"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@android:color/white"
+                    android:backgroundTint="#0C1657"/>
 
                 <Button
                     android:id="@+id/editCaretakerButton"
@@ -92,26 +105,22 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginStart="8dp"
-                    android:backgroundTint="#0C1657"
-                    android:fontFamily="sans-serif-black"
                     android:text="Edit Caretaker"
                     android:textAllCaps="false"
-                    android:textColor="@android:color/white" />
-
+                    android:textColor="@android:color/white"
+                    android:backgroundTint="#0C1657"/>
             </LinearLayout>
-
-
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <!-- Preferences Card -->
+    <!-- PREFERENCES -->
     <androidx.cardview.widget.CardView
         android:id="@+id/preferencesCard"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="6dp"
+        app:cardCornerRadius="18dp"
+        app:cardElevation="8dp"
         app:layout_constraintTop_toBottomOf="@id/caretakerCard"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -120,68 +129,52 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="18dp">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
                 android:text="Preferences"
-                android:textColor="#333333"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="#0C1657"
+                android:layout_marginBottom="8dp"/>
 
             <Switch
                 android:id="@+id/voiceSwitch"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:text="Voice guidance"
-                android:textColor="#000000" />
+                android:textColor="#333333"/>
 
             <Switch
                 android:id="@+id/vibrationSwitch"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:text="Vibration alerts"
-                android:textColor="#000000" />
-
+                android:textColor="#333333"/>
 
             <Switch
                 android:id="@+id/locationSwitch"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:text="Location services"
-                android:textColor="#000000"
-                />
+                android:textColor="#333333"/>
 
             <Switch
                 android:id="@+id/cameraDetectionSwitch"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:text="Camera detection"
-                android:textColor="#000000"
-                />
+                android:textColor="#333333"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-
-
-    <!-- Footer Buttons -->
-
+    <!-- FOOTER BUTTONS -->
     <Button
         android:id="@+id/aboutButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginBottom="16dp"
-        android:backgroundTint="#01070B"
-        android:padding="14dp"
         android:text="About IRIS"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
+        android:backgroundTint="#01070B"
+        android:padding="14dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/teachFaceButton" />
+        app:layout_constraintEnd_toStartOf="@id/teachFaceButton"/>
 
     <Button
         android:id="@+id/teachFaceButton"
@@ -189,17 +182,13 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:backgroundTint="#01070B"
-        android:padding="14dp"
         android:text="Teach Face"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
+        android:backgroundTint="#01070B"
+        android:padding="14dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/aboutButton"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-
-
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-

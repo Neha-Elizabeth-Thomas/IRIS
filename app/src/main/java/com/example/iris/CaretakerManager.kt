@@ -22,7 +22,7 @@ class CaretakerManager(
         private const val BACKUP = "caretaker_backup"
     }
 
-    /* ---------------- ADD NUMBER (SMART LOGIC) ---------------- */
+    /* ---------------- ADD NUMBER (MAX 2 LOGIC) ---------------- */
 
     fun addCaretakerNumber(number: String) {
 
@@ -31,21 +31,29 @@ class CaretakerManager(
 
         when {
             primary == null -> {
-                // 1️⃣ Save primary
                 prefs.edit().putString(PRIMARY, number).apply()
                 speak("Primary caretaker saved. Now save secondary number.")
             }
 
             backup == null -> {
-                // 2️⃣ Save backup
                 prefs.edit().putString(BACKUP, number).apply()
                 speak("Secondary caretaker saved successfully.")
             }
 
             else -> {
-                // 3️⃣ Both already saved
                 speak("You already added both caretaker numbers.")
             }
+        }
+    }
+
+    /* ---------------- UPDATE NUMBERS ---------------- */
+
+    fun updatePrimary(number: String) {
+        if (getPrimary() != null) {
+            prefs.edit().putString(PRIMARY, number).apply()
+            speak("Primary caretaker updated")
+        } else {
+            speak("No primary caretaker to update")
         }
     }
 
@@ -57,7 +65,6 @@ class CaretakerManager(
             speak("No backup caretaker to update")
         }
     }
-
 
     /* ---------------- GET NUMBERS ---------------- */
 
@@ -97,7 +104,7 @@ class CaretakerManager(
     /* ---------------- VOICE COMMAND ---------------- */
 
     fun handleVoiceCommand(command: String): Boolean {
-        if (command.contains("help")) {
+        if (command == "help" || command.startsWith("help ")) {
             speak("Calling caretaker")
             callCaretaker()
             return true

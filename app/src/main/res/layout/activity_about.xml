@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F4F6FA"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- HEADER -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="6dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="#0C1657">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="IRIS"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:text="Assistive Application for the Visually Impaired"
+                    android:textSize="14sp"
+                    android:textColor="#DDE1FF"
+                    android:layout_marginTop="4dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- WHAT IS IRIS -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="14dp"
+            app:cardElevation="4dp"
+            android:layout_marginBottom="12dp">
+
+            <LinearLayout
+                android:padding="16dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!-- Title -->
+                <TextView
+                    android:text="What is IRIS?"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#0C1657"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <!-- Intro -->
+                <TextView
+                    android:text="IRIS is an assistive mobile application designed to support visually impaired individuals in their day-to-day activities. The primary goal of IRIS is to improve independence, safety, and confidence through voice-based interaction and audio feedback."
+                    android:textSize="15sp"
+                    android:textColor="#333333"
+                    android:lineSpacingExtra="6dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <!-- How it works -->
+                <TextView
+                    android:text="How IRIS Works"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#0C1657"
+                    android:layout_marginTop="12dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:text="IRIS uses the smartphone’s camera, microphone, and speaker to understand the user’s surroundings and respond using clear voice guidance. The application operates entirely through voice commands, allowing hands-free and screen-free usage."
+                    android:textSize="15sp"
+                    android:textColor="#333333"
+                    android:lineSpacingExtra="6dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <!-- Environment Awareness -->
+                <TextView
+                    android:text="Environment Awareness"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#0C1657"
+                    android:layout_marginTop="12dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:text="IRIS can describe the environment in front of the user by analyzing the camera view and providing a short spoken description. This helps users become aware of obstacles, objects, or open paths ahead."
+                    android:textSize="15sp"
+                    android:textColor="#333333"
+                    android:lineSpacingExtra="6dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <!-- Text Reading -->
+                <TextView
+                    android:text="Text Reading Assistance"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#0C1657"
+                    android:layout_marginTop="12dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:text="IRIS is capable of reading printed text aloud using the phone camera. This feature helps users read signs, labels, and documents without requiring external help."
+                    android:textSize="15sp"
+                    android:textColor="#333333"
+                    android:lineSpacingExtra="6dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <!-- Navigation -->
+                <TextView
+                    android:text="Navigation Support"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#0C1657"
+                    android:layout_marginTop="12dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:text="IRIS provides walking navigation through voice instructions. Users can speak a destination name, and IRIS will guide them using audio directions."
+                    android:textSize="15sp"
+                    android:textColor="#333333"
+                    android:lineSpacingExtra="6dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <!-- Emergency -->
+                <TextView
+                    android:text="Emergency Assistance"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#B00020"
+                    android:layout_marginTop="12dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:text="In emergency situations, the user can simply say the word 'Help'. IRIS will immediately place a phone call to the saved caretaker numbers without requiring any screen interaction."
+                    android:textSize="15sp"
+                    android:textColor="#333333"
+                    android:lineSpacingExtra="6dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <!-- Caretaker -->
+                <TextView
+                    android:text="For Caretakers"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#0C1657"
+                    android:layout_marginTop="12dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:text="Caretakers can add up to two emergency contact numbers. It is important to ensure that required permissions such as camera, microphone, phone calls, and location access are enabled for proper operation."
+                    android:textSize="15sp"
+                    android:textColor="#333333"
+                    android:lineSpacingExtra="6dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <!-- FEATURES -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="14dp"
+            app:cardElevation="4dp"
+            android:layout_marginBottom="12dp">
+
+            <LinearLayout
+                android:padding="16dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="Key Features"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#0C1657"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:text="• Voice-based commands\n• Environment description\n• Text reading\n• Navigation assistance\n• Emergency caretaker calling"
+                    android:textSize="15sp"
+                    android:textColor="#333333"
+                    android:lineSpacingExtra="6dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- EMERGENCY -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="14dp"
+            app:cardElevation="4dp"
+            android:layout_marginBottom="12dp">
+
+            <LinearLayout
+                android:padding="16dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="Emergency Assistance"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#B00020"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:text="When the user says 'Help', IRIS immediately calls the saved caretaker numbers without requiring screen interaction."
+                    android:textSize="15sp"
+                    android:textColor="#333333"
+                    android:lineSpacingExtra="6dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- FOOTER -->
+        <TextView
+            android:text="Designed to promote safety, independence, and confidence."
+            android:textSize="13sp"
+            android:textStyle="italic"
+            android:textColor="#555555"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+</ScrollView>

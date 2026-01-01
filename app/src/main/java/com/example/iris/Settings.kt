@@ -6,6 +6,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.iris.databinding.ActivitySettingsBinding
 import java.util.Locale
+import android.content.Intent
+
 
 class SettingsActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
@@ -13,8 +15,9 @@ class SettingsActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private lateinit var caretakerManager: CaretakerManager
     private lateinit var tts: TextToSpeech
 
-    // 🔁 Flag to know whether user is editing backup
+    // Flags for edit mode
     private var isEditingBackup = false
+    private var isEditingPrimary = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +32,12 @@ class SettingsActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         // 3️⃣ Initialize CaretakerManager
         caretakerManager = CaretakerManager(this, tts)
 
-        // 4️⃣ ADD CARETAKER (Primary → Backup → Stop)
+
+
+
+
+        /* ---------------- ADD CARETAKER ---------------- */
+        // Primary → Backup → Stop
         binding.addCaretakerButton.setOnClickListener {
             val number = binding.caretakerPhone.text.toString().trim()
 
@@ -41,18 +49,17 @@ class SettingsActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             }
         }
 
-        // 5️⃣ EDIT CARETAKER (BACKUP ONLY)
+        /* ---------------- EDIT BACKUP (SHORT PRESS) ---------------- */
         binding.editCaretakerButton.setOnClickListener {
 
             if (!isEditingBackup) {
-                // First press → load saved backup number
-                val savedNumber = caretakerManager.getBackupNumber()
+                val savedBackup = caretakerManager.getBackupNumber()
 
-                if (savedNumber != null) {
-                    binding.caretakerPhone.setText(savedNumber)
-                    binding.caretakerPhone.setSelection(savedNumber.length)
+                if (savedBackup != null) {
+                    binding.caretakerPhone.setText(savedBackup)
+                    binding.caretakerPhone.setSelection(savedBackup.length)
                     tts.speak(
-                        "Edit the backup number and press edit again",
+                        "Editing backup caretaker. Press edit again to save.",
                         TextToSpeech.QUEUE_FLUSH,
                         null,
                         null
@@ -60,7 +67,7 @@ class SettingsActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                     isEditingBackup = true
                 } else {
                     tts.speak(
-                        "No backup number saved yet",
+                        "No backup caretaker saved",
                         TextToSpeech.QUEUE_FLUSH,
                         null,
                         null
@@ -68,19 +75,11 @@ class SettingsActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                 }
 
             } else {
-                // Second press → save edited backup
-                val updatedNumber = binding.caretakerPhone.text.toString().trim()
+                val updated = binding.caretakerPhone.text.toString().trim()
 
-                if (updatedNumber.isNotEmpty()) {
-                    caretakerManager.updateBackup(updatedNumber)
-
+                if (updated.isNotEmpty()) {
+                    caretakerManager.updateBackup(updated)
                     binding.caretakerPhone.text.clear()
-                    tts.speak(
-                        "Backup caretaker updated",
-                        TextToSpeech.QUEUE_FLUSH,
-                        null,
-                        null
-                    )
                     isEditingBackup = false
                 } else {
                     Toast.makeText(this, "Enter phone number", Toast.LENGTH_SHORT).show()
@@ -88,13 +87,50 @@ class SettingsActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             }
         }
 
-        // 6️⃣ About button
+        /* ---------------- EDIT PRIMARY (LONG PRESS) ---------------- */
+        binding.editCaretakerButton.setOnLongClickListener {
+
+            if (!isEditingPrimary) {
+                val savedPrimary = caretakerManager.getPrimaryNumber()
+
+                if (savedPrimary != null) {
+                    binding.caretakerPhone.setText(savedPrimary)
+                    binding.caretakerPhone.setSelection(savedPrimary.length)
+                    tts.speak(
+                        "Editing primary caretaker. Press edit again to save.",
+                        TextToSpeech.QUEUE_FLUSH,
+                        null,
+                        null
+                    )
+                    isEditingPrimary = true
+                } else {
+                    tts.speak(
+                        "No primary caretaker saved",
+                        TextToSpeech.QUEUE_FLUSH,
+                        null,
+                        null
+                    )
+                }
+
+            } else {
+                val updated = binding.caretakerPhone.text.toString().trim()
+
+                if (updated.isNotEmpty()) {
+                    caretakerManager.updatePrimary(updated)
+                    binding.caretakerPhone.text.clear()
+                    isEditingPrimary = false
+                } else {
+                    Toast.makeText(this, "Enter phone number", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            true // consume long press
+        }
+
+        /* ---------------- ABOUT ---------------- */
         binding.aboutButton.setOnClickListener {
-            Toast.makeText(
-                this,
-                "IRIS – Assistive app for visually impaired",
-                Toast.LENGTH_LONG
-            ).show()
+            val intent = Intent(this, About::class.java)
+            startActivity(intent)
         }
     }
 
