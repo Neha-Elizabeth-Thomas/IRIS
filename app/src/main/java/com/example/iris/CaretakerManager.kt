@@ -84,6 +84,7 @@ class CaretakerManager(
             return
         }
 
+
         if (ActivityCompat.checkSelfPermission(
                 context,
                 Manifest.permission.CALL_PHONE

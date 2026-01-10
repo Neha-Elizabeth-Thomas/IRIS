@@ -80,9 +80,10 @@ dependencies {
     // Text Recognition (OCR)
     implementation("com.google.android.gms:play-services-mlkit-text-recognition:19.0.0")
 
-    // TensorFlow Lite dependencies
-    implementation("org.tensorflow:tensorflow-lite-task-vision:0.4.4")
+    /* ---------------- TENSORFLOW LITE (CORRECT & COMPLETE) ---------------- */
+    implementation("org.tensorflow:tensorflow-lite:2.13.0")
     implementation("org.tensorflow:tensorflow-lite-support:0.4.4")
+    implementation("org.tensorflow:tensorflow-lite-task-vision:0.4.4")
 
     // Google AI SDK for Android (Gemini)
     implementation("com.google.ai.client.generativeai:generativeai:0.9.0")

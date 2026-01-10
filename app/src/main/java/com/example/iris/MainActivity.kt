@@ -79,6 +79,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
         cameraExecutor = Executors.newSingleThreadExecutor()
         tts = TextToSpeech(this, this)
+        caretakerManager = CaretakerManager(this, tts)
         vibrator = getSystemService(Vibrator::class.java)
 
         binding.settingsButton.setOnClickListener {
