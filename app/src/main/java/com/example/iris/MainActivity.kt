@@ -81,6 +81,12 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         tts = TextToSpeech(this, this)
         vibrator = getSystemService(Vibrator::class.java)
 
+        binding.settingsButton.setOnClickListener {
+            val intent = Intent(this, SettingsActivity::class.java)
+            startActivity(intent)
+        }
+
+
         // *NEW*: Initialize Gemini
         // We use "gemini-1.5-flash" because it is fast and cheap/free
         generativeModel = GenerativeModel(
