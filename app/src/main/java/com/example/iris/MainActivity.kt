@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     private var imageCapture: ImageCapture? = null
 
-    // **NEW**: The Gemini Generative Model
+    // *NEW*: The Gemini Generative Model
     private lateinit var generativeModel: GenerativeModel
 
     private val activityResultLauncher =
@@ -77,32 +77,14 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-        binding.settingsButton.setOnClickListener {
-            val intent = Intent(this, SettingsActivity::class.java)
-            startActivity(intent)
-        }
-
-
-
         cameraExecutor = Executors.newSingleThreadExecutor()
         tts = TextToSpeech(this, this)
-
-
         vibrator = getSystemService(Vibrator::class.java)
 
-        caretakerManager = CaretakerManager(this, tts)
-
-
-
-
-
-
-
-        // **NEW**: Initialize Gemini
+        // *NEW*: Initialize Gemini
         // We use "gemini-1.5-flash" because it is fast and cheap/free
         generativeModel = GenerativeModel(
-            modelName = "gemini-1.5-flash-001",
+            modelName = "gemini-2.5-flash",
             apiKey = BuildConfig.GEMINI_API_KEY
         )
 
@@ -130,7 +112,8 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                 .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
                 .build()
                 .also {
-                    it.setAnalyzer(cameraExecutor, ObjectDetectorAnalyzer(vibrator))
+                    // *UPDATED*: Pass 'this' (context) and 'vibrator'
+                    it.setAnalyzer(cameraExecutor, ObjectDetectorAnalyzer(this, vibrator))
                 }
 
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
@@ -148,7 +131,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         }, ContextCompat.getMainExecutor(this))
     }
 
-    // **NEW**: Function to capture image and send to Gemini
+    // *NEW*: Function to capture image and send to Gemini
     private fun describeSceneWithGemini() {
         val imageCapture = imageCapture ?: return
 

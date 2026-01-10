@@ -1,83 +1,91 @@
 package com.example.iris
 
-import android.annotation.SuppressLint
-import android.os.Build
-import android.os.VibrationEffect
+import android.content.Context
 import android.os.Vibrator
+import android.os.VibrationEffect
+import android.os.Build
 import android.util.Log
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
-import com.google.mlkit.vision.common.InputImage
-import com.google.mlkit.vision.objects.ObjectDetection
-import com.google.mlkit.vision.objects.defaults.ObjectDetectorOptions
+import org.tensorflow.lite.task.vision.detector.ObjectDetector
+import org.tensorflow.lite.support.image.TensorImage
 
-class ObjectDetectorAnalyzer(private val vibrator: Vibrator) : ImageAnalysis.Analyzer {
+class ObjectDetectorAnalyzer(
+    private val context: Context,
+    private val vibrator: Vibrator
+) : ImageAnalysis.Analyzer {
 
-    private var lastVibrationTime: Long = 0
+    private var detector: ObjectDetector? = null
 
-    private val options = ObjectDetectorOptions.Builder()
-        .setDetectorMode(ObjectDetectorOptions.STREAM_MODE)
-        .enableClassification() // We need this to get the object's label
-        .build()
+    init {
+        val options = ObjectDetector.ObjectDetectorOptions.builder()
+            .setMaxResults(5)
+            .setScoreThreshold(0.5f)
+            .build()
 
-    private val objectDetector = ObjectDetection.getClient(options)
+        try {
+            // Make sure this string matches your exact filename in assets!
+            detector = ObjectDetector.createFromFileAndOptions(
+                context,
+                "efficientdet.tflite",
+                options
+            )
+            Log.e("IrisDetector", "SUCCESS: Model loaded correctly!")
+        } catch (e: Exception) {
+            // This is likely the error you are missing
+            Log.e("IrisDetector", "CRITICAL ERROR: Model failed to load. Check filename!", e)
+        }
+    }
 
-    @SuppressLint("UnsafeOptInUsageError")
+    @androidx.annotation.OptIn(androidx.camera.core.ExperimentalGetImage::class)
     override fun analyze(imageProxy: ImageProxy) {
         val mediaImage = imageProxy.image
-        if (mediaImage != null) {
-            val image = InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
 
-            objectDetector.process(image)
-                .addOnSuccessListener { detectedObjects ->
-                    // **NEW**: Loop through all detected objects
-                    for (detectedObject in detectedObjects) {
-                        // Loop through the labels for each object
-                        for (label in detectedObject.labels) {
-                            // Check if the label is in our list of obstacles
-                            if (OBSTACLE_LABELS.contains(label.text)) {
-                                // If it is, check the cooldown and vibrate
-                                val currentTime = System.currentTimeMillis()
-                                if (currentTime - lastVibrationTime > COOLDOWN_PERIOD) {
-                                    triggerVibration()
-                                    lastVibrationTime = currentTime
-                                    // Once we find one obstacle, we don't need to check others in this frame
-                                    return@addOnSuccessListener
-                                }
-                            }
-                        }
-                    }
+        if (mediaImage != null && detector != null) {
+            // CODE IS WORKING
+            val bitmap = imageProxy.toBitmap()
+            val image = TensorImage.fromBitmap(bitmap)
+            val results = detector!!.detect(image)
+
+            // Log how many items we see (even if 0)
+            Log.d("IrisDetector", "Frame Processed. Objects found: ${results.size}")
+
+            var maxObstacleSize = 0f
+
+            for (detection in results) {
+                val boundingBox = detection.boundingBox
+                val objectHeight = boundingBox.height()
+                val screenHeight = image.height.toFloat()
+                val heightRatio = objectHeight / screenHeight
+
+                if (heightRatio > maxObstacleSize) {
+                    maxObstacleSize = heightRatio
                 }
-                .addOnFailureListener { e ->
-                    Log.e("ObjectDetector", "Object detection failed", e)
-                }
-                .addOnCompleteListener {
-                    imageProxy.close()
-                }
-        } else {
-            imageProxy.close()
+            }
+
+            if (maxObstacleSize > 0.25f) { // 25% threshold
+                triggerVibration(maxObstacleSize)
+            }
         }
+        else {
+            // SILENT FAILURE DIAGNOSIS
+            if (detector == null) {
+                Log.e("IrisDetector", "SKIPPING FRAME: Detector is null! (Model didn't load)")
+            } else if (mediaImage == null) {
+                Log.e("IrisDetector", "SKIPPING FRAME: Camera image is null!")
+            }
+        }
+
+        imageProxy.close()
     }
 
-    private fun triggerVibration() {
+    private fun triggerVibration(intensity: Float) {
+        val duration = (intensity * 200).toLong()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val vibrationEffect = VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE)
-            vibrator.vibrate(vibrationEffect)
+            vibrator.vibrate(VibrationEffect.createOneShot(duration, VibrationEffect.DEFAULT_AMPLITUDE))
         } else {
             @Suppress("DEPRECATION")
-            vibrator.vibrate(100)
+            vibrator.vibrate(duration)
         }
-    }
-
-    companion object {
-        private const val COOLDOWN_PERIOD = 1000L // 1 second
-
-        // **NEW**: A set of labels we consider to be obstacles.
-        // Using a Set provides a fast "contains" check.
-        private val OBSTACLE_LABELS = setOf(
-            "Person", "Car", "Bicycle", "Motorcycle", "Bus", "Train", "Truck",
-            "Chair", "Couch", "Bed", "Dining Table", "Desk", "Door", "Stairs"
-            // We can add more common obstacles here later.
-        )
     }
 }
